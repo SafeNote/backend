@@ -73,6 +73,15 @@ app.UseSwaggerUI();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseRateLimiter();
+
+app.MapGet("/local-tz",
+    () => new
+    {
+        LocalStandardName = TimeZoneInfo.Local.StandardName,
+        UtcStandardName = TimeZoneInfo.Utc.StandardName
+    }
+);
+
 app.MapNoteEndpoints();
 
 app.Run();

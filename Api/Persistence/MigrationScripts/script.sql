@@ -53,3 +53,22 @@ BEGIN
 END $EF$;
 COMMIT;
 
+START TRANSACTION;
+
+
+DO $EF$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20230207143905_RemovedModifiedDate') THEN
+    ALTER TABLE "Notes" DROP COLUMN "ModifiedAt";
+    END IF;
+END $EF$;
+
+DO $EF$
+BEGIN
+    IF NOT EXISTS(SELECT 1 FROM "__EFMigrationsHistory" WHERE "MigrationId" = '20230207143905_RemovedModifiedDate') THEN
+    INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+    VALUES ('20230207143905_RemovedModifiedDate', '7.0.2');
+    END IF;
+END $EF$;
+COMMIT;
+
